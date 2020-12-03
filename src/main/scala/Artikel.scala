@@ -1,7 +1,7 @@
 /**
-* @author Péter Ferenc Gyarmati
-* @id 11913446
-*/
+ * @author Péter Ferenc Gyarmati
+ * @id 11913446
+ */
 
 trait Artikel {
   var id: Int
