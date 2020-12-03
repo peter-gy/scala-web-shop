@@ -1,3 +1,8 @@
+/**
+ * @author Péter Ferenc Gyarmati
+ * @id 11913446
+ */
+
 object MainApp {
   def main(args: Array[String]): Unit = {
     val db = new Database()

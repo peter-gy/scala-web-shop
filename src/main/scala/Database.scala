@@ -1,3 +1,8 @@
+/**
+ * @author Péter Ferenc Gyarmati
+ * @id 11913446
+ */
+
 class Database extends Warenkorb with Logger {
 
   private var storedItems: Array[StoreItem] = Array()
