@@ -12,15 +12,15 @@ object MainApp {
     val item3 = new StoreItem(3, "Smartphone", 1200)
     val item4 = new StoreItem(4, "PC", 1400)
 
-    db.store(item1)
-    db.sumUp()
+    db store item1
+    println(db.sumUp())
 
     Array(item2, item3, item4) foreach db.store
-    db.sumUp()
+    println(db.sumUp())
 
-    db.delete(1)
-    db.sumUp()
+    db delete 1
+    println(db.sumUp())
 
-    db.search("PC")
+    db search "PC"
   }
 }

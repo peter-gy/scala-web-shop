@@ -34,9 +34,6 @@ class Database extends Warenkorb with Logger {
     storedItems
   }
 
-  override def sumUp(): Int = {
-    val res: Int = storedItems.map(_.value).sum
-    println(res)
-    res
-  }
+  override def sumUp(): Int = storedItems.map(_.value).sum
+
 }
