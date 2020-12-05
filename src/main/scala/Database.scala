@@ -8,18 +8,25 @@ class Database extends Warenkorb with Logger {
   private var storedItems: Array[StoreItem] = Array()
 
   override def delete(id: Int): Array[StoreItem] = {
-    val item: Option[StoreItem] = storedItems.find(_.id == id)
-    if (item.isDefined) {
-      logAction("gelöscht", item.get.name)
-      storedItems = storedItems.filterNot(_.id == id)
-    } else {
-      println(s"Id $id nicht gefunden")
-    }
+    storedItems = delete(id, storedItems)
     storedItems
   }
 
-  override def search(name: String): Array[StoreItem] = {
-    val foundItems: Array[StoreItem] = storedItems.filter(_.name == name)
+  def delete(id: Int, items: Array[StoreItem]): Array[StoreItem] = {
+    val item: Option[StoreItem] = items.find(_.id == id)
+    if (item.isDefined) {
+      logAction("gelöscht", item.get.name)
+      items.filterNot(_.id == id)
+    } else {
+      println(s"Id $id nicht gefunden")
+      items
+    }
+  }
+
+  override def search(name: String): Array[StoreItem] = search(name, storedItems)
+
+  def search(name: String, items: Array[StoreItem]): Array[StoreItem] = {
+    val foundItems: Array[StoreItem] = items.filter(_.name == name)
     if (foundItems.nonEmpty) {
       for (i <- 1 to foundItems.length) logAction("gefunden", name)
     } else {
@@ -29,9 +36,14 @@ class Database extends Warenkorb with Logger {
   }
 
   override def store(item: StoreItem): Array[StoreItem] = {
-    logAction("gespeichert", item.name)
-    storedItems = storedItems :+ item
+    storedItems = store(item, storedItems)
     storedItems
+  }
+
+  def store(item: StoreItem, items: Array[StoreItem]): Array[StoreItem] = {
+    logAction("gespeichert", item.name)
+    val updatedItems = items :+ item
+    updatedItems
   }
 
   override def sumUp(): Int = storedItems.map(_.value).sum
