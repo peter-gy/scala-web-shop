@@ -4,7 +4,6 @@
  */
 
 class Database extends Warenkorb with Logger {
-
   private var storedItems: Array[StoreItem] = Array()
 
   override def delete(id: Int): Array[StoreItem] = {
@@ -16,19 +15,19 @@ class Database extends Warenkorb with Logger {
     val item: Option[StoreItem] = items.find(_.id == id)
     if (item.isDefined) {
       logAction("gelöscht", item.get.name)
-      items.filterNot(_.id == id)
+      items.filterNot(_.id == id) // return all the items which do not have the supplied id
     } else {
       println(s"Id $id nicht gefunden")
-      items
+      items // return the unmodified Array
     }
   }
 
   override def search(name: String): Array[StoreItem] = search(name, storedItems)
 
   def search(name: String, items: Array[StoreItem]): Array[StoreItem] = {
-    val foundItems: Array[StoreItem] = items.filter(_.name == name)
+    val foundItems: Array[StoreItem] = items filter(_.name == name)
     if (foundItems.nonEmpty) {
-      for (i <- 1 to foundItems.length) logAction("gefunden", name)
+      foundItems foreach(item => logAction("gefunden", item.name))
     } else {
       println(s"$name nicht gefunden")
     }
@@ -42,7 +41,7 @@ class Database extends Warenkorb with Logger {
 
   def store(item: StoreItem, items: Array[StoreItem]): Array[StoreItem] = {
     logAction("gespeichert", item.name)
-    val updatedItems = items :+ item
+    val updatedItems = items :+ item // appending to the end of items
     updatedItems
   }
 
